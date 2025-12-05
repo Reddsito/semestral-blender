@@ -4,7 +4,7 @@
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { CONFIG } from '../utils/constants.js';
-import { createWaterMaterial, isWaterMesh } from '../materials/WaterShader.js';
+import { applyWaterAnimation, isWaterMesh } from '../materials/WaterShader.js';
 
 export class ModelLoader {
     constructor(scene) {
@@ -18,8 +18,9 @@ export class ModelLoader {
             wolf: null,
             base: null
         };
-        
+
         this.waterMeshes = [];
+        this.waterAnimations = []; // Funciones de update para cada agua
     }
 
     /**
@@ -44,11 +45,11 @@ export class ModelLoader {
                     child.castShadow = true;
                     child.receiveShadow = true;
                     
-                    // Detectar y aplicar shader de agua
+                    // Detectar y aplicar animación de agua (mantiene textura original)
                     if (isWaterMesh(child)) {
-                        const waterMaterial = createWaterMaterial();
-                        child.material = waterMaterial;
+                        const waterAnim = applyWaterAnimation(child);
                         this.waterMeshes.push(child);
+                        this.waterAnimations.push(waterAnim.update);
                         console.log('💧 Agua detectada:', child.name);
                     }
                 }
@@ -128,10 +129,8 @@ export class ModelLoader {
      * Actualiza animaciones de agua
      */
     updateWater(time) {
-        this.waterMeshes.forEach(mesh => {
-            if (mesh.material.uniforms) {
-                mesh.material.uniforms.time.value = time;
-            }
+        this.waterAnimations.forEach(update => {
+            update(time);
         });
     }
 

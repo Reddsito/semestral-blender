@@ -50,13 +50,11 @@ export class LightingSystem {
 
     createNightLight() {
         const { color, intensity } = CONFIG.lighting.moon;
-        
+
         this.nightLight = new THREE.DirectionalLight(color, 0);
         this.nightLight.position.set(-5, 15, -5);
-        this.nightLight.castShadow = true;
-        this.nightLight.shadow.mapSize.width = 1024;
-        this.nightLight.shadow.mapSize.height = 1024;
-        
+        this.nightLight.castShadow = false; // Luna no proyecta sombras marcadas
+
         this.scene.add(this.nightLight);
     }
 

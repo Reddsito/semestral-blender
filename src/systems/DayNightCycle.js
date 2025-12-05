@@ -10,7 +10,7 @@ export class DayNightCycle {
         this.scene = scene;
         this.lightingSystem = lightingSystem;
 
-        this.isAnimating = false;
+        this.isAnimating = true; // Inicia automáticamente
         this.cycleAngle = 0; // 0 a 2*PI (360°)
 
         this.sun = null;

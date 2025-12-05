@@ -21,7 +21,7 @@ export const CONFIG = {
 
     // Ciclo día/noche
     dayNight: {
-        speed: 0.15,              // Velocidad del ciclo (0.15 = ~42 segundos)
+        speed: 0.35,              // Velocidad del ciclo (más rápido)
         sunRadius: 18,            // Radio de órbita del sol (más cerca)
         moonRadius: 18,           // Radio de órbita de la luna (más cerca)
         sunSize: 3.0,             // Tamaño del sol (más grande)

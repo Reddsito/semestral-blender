@@ -7,6 +7,7 @@ import { LightingSystem } from './scene/Lights.js';
 import { DayNightCycle } from './systems/DayNightCycle.js';
 import { ModelLoader } from './models/ModelLoader.js';
 import { UIControls } from './ui/Controls.js';
+import { SoundSystem } from './systems/SoundSystem.js';
 
 class Application {
     constructor() {
@@ -16,6 +17,7 @@ class Application {
         this.dayNightCycle = null;
         this.modelLoader = null;
         this.uiControls = null;
+        this.soundSystem = null;
         
         // Variables de tiempo
         this.lastTime = 0;
@@ -37,16 +39,24 @@ class Application {
             this.sceneSetup.scene,
             this.lightingSystem
         );
+
+        // 4. Crear sistema de sonido
+        this.soundSystem = new SoundSystem();
         
-        // 4. Cargar modelos 3D
+        // 5. Cargar modelos 3D
         this.modelLoader = new ModelLoader(this.sceneSetup.scene);
         this.modelLoader.loadAll((waterMeshes) => {
             // Cuando todos los modelos estén cargados
             this.onModelsLoaded(waterMeshes);
         });
         
-        // 5. Iniciar loop de animación
+        // 6. Iniciar loop de animación
         this.animate();
+
+        // 7. Inicializar sonido con primer click del usuario
+        document.addEventListener('click', () => {
+            this.soundSystem.init();
+        }, { once: true });
     }
 
     onModelsLoaded(waterMeshes) {
@@ -74,6 +84,7 @@ class Application {
         this.sceneSetup.update();
         this.dayNightCycle.update(deltaTime);
         this.modelLoader.updateWater(currentTime);
+        this.soundSystem.update(this.dayNightCycle.cycleAngle);
         
         // Renderizar
         this.sceneSetup.render();
