@@ -75,7 +75,7 @@ export const CONFIG = {
     models: {
         chicken: {
             path: '/chicken.glb',
-            position: { x: 2, y: 0, z: -1 },
+            position: { x: 3, y: -0.05, z: -2 },
             scale: 0.3,
             rotation: Math.PI / 4
         },

@@ -61,13 +61,19 @@ class Application {
 
     onModelsLoaded(waterMeshes) {
         console.log('✅ Aplicación lista!');
-        
+
         // Registrar meshes de agua en el ciclo día/noche
         this.dayNightCycle.registerWaterMeshes(waterMeshes);
-        
+
+        // Pasar los modelos al sistema de sonido para animarlos
+        this.soundSystem.setModels(
+            this.modelLoader.getModel('chicken'),
+            this.modelLoader.getModel('wolf')
+        );
+
         // Crear controles UI
         this.uiControls = new UIControls(this.dayNightCycle);
-        
+
         // Ocultar pantalla de carga
         UIControls.hideLoading();
     }
