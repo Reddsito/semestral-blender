@@ -53,7 +53,17 @@ export class LightingSystem {
 
         this.nightLight = new THREE.DirectionalLight(color, 0);
         this.nightLight.position.set(-5, 15, -5);
-        this.nightLight.castShadow = false; // Luna no proyecta sombras marcadas
+        this.nightLight.castShadow = true;
+
+        // Configuración de sombras para la luna
+        this.nightLight.shadow.mapSize.width = 2048;
+        this.nightLight.shadow.mapSize.height = 2048;
+        this.nightLight.shadow.camera.left = -25;
+        this.nightLight.shadow.camera.right = 25;
+        this.nightLight.shadow.camera.top = 25;
+        this.nightLight.shadow.camera.bottom = -25;
+        this.nightLight.shadow.camera.near = 0.5;
+        this.nightLight.shadow.camera.far = 100;
 
         this.scene.add(this.nightLight);
     }

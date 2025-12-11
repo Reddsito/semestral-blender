@@ -53,10 +53,17 @@ class Application {
         // 6. Iniciar loop de animación
         this.animate();
 
-        // 7. Inicializar sonido con primer click del usuario
-        document.addEventListener('click', () => {
+        // 7. Inicializar sonido con cualquier interacción del usuario
+        const initSound = () => {
             this.soundSystem.init();
-        }, { once: true });
+            // Remover todos los listeners después de activar
+            ['click', 'touchstart', 'keydown', 'mousemove', 'wheel'].forEach(event => {
+                document.removeEventListener(event, initSound);
+            });
+        };
+        ['click', 'touchstart', 'keydown', 'mousemove', 'wheel'].forEach(event => {
+            document.addEventListener(event, initSound, { once: true });
+        });
     }
 
     onModelsLoaded(waterMeshes) {
